@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alejandra</title>
+<style>
+  :root {
+    --bg: #faf8f5;
+    --text: #1d1b19;
+    --muted: #6b655e;
+    --accent: #c2410c;
+    --line: #e4dfd8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151413;
+      --text: #f3efe9;
+      --muted: #a39b91;
+      --accent: #fb923c;
+      --line: #2e2b28;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.25rem;
+    max-width: 36rem;
+    margin: 0 auto;
+    padding: max(1.5rem, env(safe-area-inset-top)) 1.5rem max(1.5rem, env(safe-area-inset-bottom));
+  }
+  .date {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  h1 {
+    font-size: clamp(2.75rem, 14vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+  .role {
+    font-size: 1.1rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    width: 3rem;
+    margin: 0.25rem 0;
+  }
+  .problem {
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 30rem;
+  }
+</style>
+</head>
+<body>
+  <main>
+    <p class="date" id="date"></p>
+    <h1>Alejandra</h1>
+    <p class="role">MSc student, National College of Ireland</p>
+    <hr>
+    <p class="problem">I care about helping retailers match what they stock to what customers actually want, so fewer products sit unsold and fewer shelves run empty.</p>
+  </main>
+
+  <script>
+    var el = document.getElementById("date");
+    el.textContent = new Date().toLocaleDateString("en-IE", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+  </script>
+</body>
+</html>
