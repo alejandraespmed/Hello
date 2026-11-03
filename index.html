@@ -3,34 +3,61 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e0f13">
 <title>Alejandra</title>
 <style>
   :root {
-    --bg: #faf8f5;
-    --text: #1d1b19;
-    --muted: #6b655e;
-    --accent: #c2410c;
-    --line: #e4dfd8;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #151413;
-      --text: #f3efe9;
-      --muted: #a39b91;
-      --accent: #fb923c;
-      --line: #2e2b28;
-    }
+    --bg1: #0e0f13;
+    --bg2: #1b1d25;
+    --silver-1: #f5f7fa;
+    --silver-2: #aeb4be;
+    --silver-3: #6f7681;
+    --text: #e9ecf1;
+    --muted: #9ba2ad;
   }
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; }
   body {
-    background: var(--bg);
     color: var(--text);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(60rem 30rem at 50% -10%, rgba(220, 226, 236, 0.16), transparent 60%),
+      radial-gradient(40rem 30rem at 100% 100%, rgba(160, 170, 190, 0.12), transparent 60%),
+      linear-gradient(160deg, var(--bg2), var(--bg1));
+    background-attachment: fixed;
+    overflow: hidden;
   }
+
+  /* Glitter layer */
+  #glitter {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .sparkle {
+    position: absolute;
+    background: radial-gradient(circle, #fff 0%, #dfe5ee 40%, rgba(200, 208, 220, 0) 72%);
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle var(--dur, 3s) ease-in-out var(--delay, 0s) infinite;
+  }
+  .sparkle.star {
+    border-radius: 0;
+    background: #fff;
+    clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+    50%      { opacity: 1; transform: scale(1) rotate(45deg); }
+  }
+
   main {
+    position: relative;
+    z-index: 1;
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
@@ -40,53 +67,113 @@
     margin: 0 auto;
     padding: max(1.5rem, env(safe-area-inset-top)) 1.5rem max(1.5rem, env(safe-area-inset-bottom));
   }
+
   .date {
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--muted);
   }
+
   h1 {
-    font-size: clamp(2.75rem, 14vw, 4.5rem);
+    font-size: clamp(3rem, 16vw, 5rem);
     line-height: 1.05;
     letter-spacing: -0.03em;
-    font-weight: 700;
+    font-weight: 800;
+    background: linear-gradient(
+      100deg,
+      var(--silver-3) 0%,
+      var(--silver-1) 25%,
+      var(--silver-2) 45%,
+      #ffffff 55%,
+      var(--silver-2) 70%,
+      var(--silver-3) 100%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
+    filter: drop-shadow(0 0 18px rgba(220, 228, 240, 0.25));
   }
+  @keyframes shimmer {
+    0%   { background-position: 100% 0; }
+    100% { background-position: -150% 0; }
+  }
+
   .role {
-    font-size: 1.1rem;
-    color: var(--accent);
+    font-size: 1.05rem;
     font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--silver-2);
   }
-  hr {
-    border: 0;
-    border-top: 1px solid var(--line);
-    width: 3rem;
+
+  .divider {
+    width: 4rem;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--silver-1), rgba(255, 255, 255, 0));
     margin: 0.25rem 0;
   }
+
   .problem {
     font-size: 1.15rem;
-    color: var(--text);
     max-width: 30rem;
+    padding: 1.1rem 1.25rem;
+    border-radius: 1rem;
+    color: var(--text);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(220, 228, 240, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 10px 30px rgba(0, 0, 0, 0.35);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    h1 { animation: none; background-position: 50% 0; }
+    .sparkle { animation: none; opacity: 0.6; transform: none; }
   }
 </style>
 </head>
 <body>
+  <div id="glitter" aria-hidden="true"></div>
+
   <main>
     <p class="date" id="date"></p>
     <h1>Alejandra</h1>
     <p class="role">MSc student, National College of Ireland</p>
-    <hr>
-    <p class="problem">I care about helping retailers match what they stock to what customers actually want, so fewer products sit unsold and fewer shelves run empty.</p>
+    <div class="divider"></div>
+    <p class="problem">I like analysing data to make data-driven decisions</p>
   </main>
 
   <script>
-    var el = document.getElementById("date");
-    el.textContent = new Date().toLocaleDateString("en-IE", {
+    // Today's date
+    document.getElementById("date").textContent = new Date().toLocaleDateString("en-IE", {
       weekday: "long",
       day: "numeric",
       month: "long",
       year: "numeric"
     });
+
+    // Glitter
+    (function () {
+      var box = document.getElementById("glitter");
+      var count = window.innerWidth < 600 ? 40 : 80;
+      for (var i = 0; i < count; i++) {
+        var s = document.createElement("span");
+        var isStar = Math.random() < 0.3;
+        var size = isStar ? 8 + Math.random() * 10 : 2 + Math.random() * 5;
+        s.className = "sparkle" + (isStar ? " star" : "");
+        s.style.left = Math.random() * 100 + "%";
+        s.style.top = Math.random() * 100 + "%";
+        s.style.width = size + "px";
+        s.style.height = size + "px";
+        s.style.setProperty("--dur", (2 + Math.random() * 4) + "s");
+        s.style.setProperty("--delay", (Math.random() * 5) + "s");
+        box.appendChild(s);
+      }
+    })();
   </script>
 </body>
 </html>
